@@ -1,5 +1,5 @@
 // Conector a la base de datos
-const sequelize = require('../database/database_sql');
+const sequelize = require('../database/db');
 
 // Importación de modelos
 //const { cuentaBancariaModel, contactoModel } = require('../models/cuentaBancaria');

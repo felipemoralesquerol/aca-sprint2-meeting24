@@ -1,6 +1,6 @@
 // Importación de base de datos
-const mongoose = require('./database/database_mongo');
-const sequelize = require('./database/database_sql');
+const mongoose = require('./database/mongo');
+const sequelize = require('./database/db');
 
 const morgan = require('morgan');
 
@@ -10,12 +10,16 @@ require('dotenv').config();
 const bandasRouter = require('./routes/bandas');
 
 // Importaciones adicionales
+const cors = require('cors');
 const express = require('express');
 const app = express();
 
 // Settings
 app.use(express.json());
 app.use(morgan('combined'));
+// Gestión de cors
+app.use(cors());
+app.options('*', cors());
 
 
 app.use('/bandas', bandasRouter);

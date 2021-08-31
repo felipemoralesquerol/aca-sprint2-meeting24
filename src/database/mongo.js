@@ -13,7 +13,6 @@ const MONGODB_URI1 = 'mongodb+srv://' + process.env.MONGODB_USER + ':' + process
 const MONGODB_URI = process.env.MONGODB_URI_ATLAS;
 console.log(MONGODB_URI)
 
-
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -22,9 +21,5 @@ mongoose.connect(MONGODB_URI, {
 })
     .then(db => console.log('Base de datos conectada!'))
     .catch(err => console.log('Error: ' + err));
-
-
-
-
 
 module.exports = mongoose

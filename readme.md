@@ -5,6 +5,7 @@
 
 `npm i sequelize`
 
+npm install cors --save
 # Entidades incluidas
 - Bandas 
 
