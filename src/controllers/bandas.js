@@ -4,6 +4,26 @@ const sequelize = require('../database/database_sql');
 // Importación de modelos
 //const { cuentaBancariaModel, contactoModel } = require('../models/cuentaBancaria');
 
+exports.Exist = async function (req, res, next) {
+    try {
+        cadena = `SELECT * FROM bandas WHERE id=${req.params.id}`
+        const respuesta = await sequelize.query(cadena, { type: sequelize.QueryTypes.SELECT });
+        console.log(respuesta);
+        if (respuesta.length > 0) {
+            req.banda = respuesta;
+            next();
+        } else {
+            res.status(404).json({ status: 'No encontrado' });
+        }
+
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ status: 'Error interno' })
+    }
+
+};
+
 exports.List = async function (req, res, next) {
     const todos = await sequelize.query('SELECT * FROM bandas', { type: sequelize.QueryTypes.SELECT });
     console.log(todos);
@@ -26,19 +46,39 @@ exports.Add = async function (req, res, next) {
     }
     catch (err) {
         console.log(err.message);
-        res.status(500).json('Error interno!');
+        res.status(500).json({ status: 'Error interno' });
     }
 };
 
-exports.Delete = async function (req, res, next) {
+
+exports.Update = async function (req, res, next) {
     try {
-        cadena = `DELETE FROM bandas where id=${req.params.id}`;
-        console.log(cadena);
-        const resultado = await sequelize.query(cadena, { type: sequelize.QueryTypes.DELETE });
+        cadena = `UPDATE bandas SET nombre='${req.body.nombre}',
+                      integrantes=${req.body.integrantes}, 
+                      fecha_inicio='${req.body.fecha_inicio}',
+                      fecha_separación='${req.body.fecha_separación}',
+                      pais='${req.body.pais}'
+                  WHERE id=${req.params.id}`;
+        console.log(req.body, cadena);
+        const resultado = await sequelize.query(cadena, { type: sequelize.QueryTypes.UPDATE });
         res.json(resultado);
     }
     catch (err) {
         console.log(err.message);
+        res.status(500).json({ status: 'Error interno' });
+    }
+}
+exports.Delete = async function (req, res, next) {
+    try {
+        cadena = `DELETE FROM bandas WHERE id=${req.params.id}`;
+        console.log(cadena);
+        const resultado = await sequelize.query(cadena, { type: sequelize.QueryTypes.DELETE });
+        console.log(req.banda)
+        res.json(req.banda);
+    }
+    catch (err) {
+        console.log(err.message);
+        res.status(500).json({ status: 'Error interno' });
     }
 };
 
