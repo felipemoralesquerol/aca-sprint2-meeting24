@@ -6,7 +6,7 @@
 `npm i sequelize`
 
 # Entidades incluidas
-- Cuentas bancarias
+- Bandas 
 
 
 # Instrucciones para desarrollar localmente

@@ -6,9 +6,6 @@ const morgan = require('morgan');
 
 require('dotenv').config();
 
-// Info gestionada en mongoDB
-const cuentaBancariaRouter = require('./routes/cuentaBancaria');
-
 // Info gestionada en MySQL
 const bandasRouter = require('./routes/bandas');
 
@@ -21,7 +18,6 @@ app.use(express.json());
 app.use(morgan('combined'));
 
 
-app.use('/cuentasBancarias', cuentaBancariaRouter);
 app.use('/bandas', bandasRouter);
 
 app.use('/version', (req, res) => {
