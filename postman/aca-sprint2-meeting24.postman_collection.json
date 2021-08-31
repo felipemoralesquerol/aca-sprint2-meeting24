@@ -36,6 +36,40 @@
 			"response": []
 		},
 		{
+			"name": "search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/bandas/search?pais=Brasil&integrantes=4&nombre=Caetano Veloso",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bandas",
+						"search"
+					],
+					"query": [
+						{
+							"key": "pais",
+							"value": "Brasil"
+						},
+						{
+							"key": "integrantes",
+							"value": "4"
+						},
+						{
+							"key": "nombre",
+							"value": "Caetano Veloso"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "delete",
 			"request": {
 				"method": "DELETE",
@@ -99,15 +133,25 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Los Gardelitos\",\n    \"integrantes\": 3,\n    \"fecha_inicio\": \"1995-05-12\",\n    \"fecha_separación\":\"2000-06-06\",\n    \"pais\": \"Argentina\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:3000/bandas",
+					"raw": "http://localhost:3000/bandas/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"bandas"
+						"bandas",
+						"7"
 					]
 				}
 			},
