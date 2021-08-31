@@ -9,8 +9,9 @@ const bandasController = require('../controllers/bandas');
 // CuentasBancarias
 router.get('/', bandasController.List);
 router.get('/count', bandasController.Count)
+router.get('/search', bandasController.Search);
+
 router.get('/:id', bandasController.Exist, (req, res) => { res.json(req.banda) });
-// router.get('/search/', bandasController.cuentaBancariaListPorNombre);
 
 router.post('/', bandasController.Add);
 router.delete('/:id', bandasController.Exist, bandasController.Delete);

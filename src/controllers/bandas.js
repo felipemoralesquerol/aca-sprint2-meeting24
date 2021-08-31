@@ -24,6 +24,40 @@ exports.Exist = async function (req, res, next) {
 
 };
 
+
+exports.Search = async function (req, res, next) {
+    try {
+        buscar = ""
+        if (req.query.pais) {
+            buscar += ` pais like '%${req.query.pais}%' AND `;
+        };
+        if (req.query.nombre) {
+            buscar += `nombre like '%${req.query.nombre}%' AND `
+        };
+        if (req.query.integrantes) {
+            buscar += `integrantes = ${req.query.integrantes} AND `
+        };
+        // Recorte AND final
+        buscar = buscar.substr(0, buscar.length - 5);
+        buscar = buscar.length > 0 ? ` WHERE ${buscar}` : '';
+        console.log('Actualizado: ', buscar);
+        cadena = `SELECT * FROM bandas ${buscar}`;
+        const respuesta = await sequelize.query(cadena, { type: sequelize.QueryTypes.SELECT });
+        //console.log(respuesta);
+        if (respuesta.length > 0) {
+            res.json(respuesta);
+        } else {
+            res.status(404).json({ status: 'No encontrado' });
+        }
+
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ status: 'Error interno' })
+    }
+
+};
+
 exports.List = async function (req, res, next) {
     const todos = await sequelize.query('SELECT * FROM bandas', { type: sequelize.QueryTypes.SELECT });
     console.log(todos);
