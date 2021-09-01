@@ -59,9 +59,15 @@ exports.Search = async function (req, res, next) {
 };
 
 exports.List = async function (req, res, next) {
-    const todos = await sequelize.query('SELECT * FROM bandas', { type: sequelize.QueryTypes.SELECT });
-    console.log(todos);
-    res.json(todos);
+    try {
+        const todos = await sequelize.query('SELECT * FROM bandas', { type: sequelize.QueryTypes.SELECT });
+        console.log(todos);
+        res.json(todos);
+    }
+    catch (err) {
+        console.log(err.message);
+        res.status(500).json({ status: 'Error interno', texto: err.message });
+    }
 };
 
 exports.Count = async function (req, res, next) {
