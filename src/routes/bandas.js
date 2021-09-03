@@ -15,7 +15,7 @@ router.get('/:id', bandasController.Exist, (req, res) => { res.json(req.banda) }
 
 router.post('/', bandasController.Add);
 router.delete('/:id', bandasController.Exist, bandasController.Delete);
-router.put('/:id', /*bandasController.Exist,*/ bandasController.Update);
+router.put('/:id', bandasController.Exist, bandasController.Update);
 
 
 module.exports = router;

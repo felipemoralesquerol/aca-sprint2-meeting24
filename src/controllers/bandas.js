@@ -6,7 +6,12 @@ const sequelize = require('../database/db');
 
 exports.Exist = async function (req, res, next) {
     try {
-        cadena = `SELECT * FROM bandas WHERE id=${req.params.id}`
+        // // Evita SQL injection
+        // if (isNaN(parseInt(req.params.id))) {
+        //     throw new Error('Error de peticion (Se espera un valor entero))');
+        // }
+
+        cadena = `SELECT * FROM bandas WHERE id = ${req.params.id};`
         const respuesta = await sequelize.query(cadena, { type: sequelize.QueryTypes.SELECT });
         console.log(respuesta);
         if (respuesta.length > 0) {
