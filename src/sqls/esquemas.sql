@@ -31,7 +31,7 @@ create table albumes (
  primary key (id)
 );
 
-
+/* Alters tables*/
 ALTER TABLE bandas ADD CONSTRAINT bandas_pais_FK FOREIGN KEY (pais_id) REFERENCES paises(id);
 ALTER TABLE canciones ADD CONSTRAINT canciones_FK FOREIGN KEY (banda_id) REFERENCES bandas(id);
 ALTER TABLE canciones ADD CONSTRAINT canciones_alb_FK FOREIGN KEY (album_id) REFERENCES albumes(id);
