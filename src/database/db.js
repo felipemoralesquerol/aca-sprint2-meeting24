@@ -18,7 +18,7 @@ async function authenticate_mysql() {
         await sequelize.authenticate();
         console.log('Conectado a base de datos MySQL.');
     } catch (error) {
-        console.error('Error de conexión a base de datos MySQL:', error);
+        console.error('Error en conexión a base de datos MySQL:', error);
     }
 };
 
