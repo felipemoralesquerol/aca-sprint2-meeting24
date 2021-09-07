@@ -3,20 +3,17 @@ const app = express();
 
 const router = express.Router();
 
-// Controllers
-const bandasController = require('../controllers/bandas');
+const Controller = require('../controllers/bandas');
 
-// CuentasBancarias
-router.get('/', bandasController.List);
-router.get('/count', bandasController.Count)
-router.get('/search', bandasController.Search);
+router.get('/', Controller.List);
+router.get('/count', Controller.Count)
+router.get('/search', Controller.Search);
 
-router.get('/:id', bandasController.Exist, (req, res) => { res.json(req.banda) });
+router.get('/:id', Controller.Exist, (req, res) => { res.json(req.banda) });
 
-router.post('/', bandasController.Add);
-router.delete('/:id', bandasController.Exist, bandasController.Delete);
-router.put('/:id', bandasController.Exist, bandasController.Update);
-
+router.post('/', Controller.Add);
+router.delete('/:id', Controller.Exist, Controller.Delete);
+router.put('/:id', Controller.Exist, Controller.Update);
 
 module.exports = router;
 

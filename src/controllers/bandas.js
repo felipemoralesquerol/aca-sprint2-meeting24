@@ -1,5 +1,6 @@
 // Conector a la base de datos
 const sequelize = require('../database/db');
+const tableName = 'bandas';
 
 // Importación de modelos
 //const { cuentaBancariaModel, contactoModel } = require('../models/cuentaBancaria');
@@ -11,7 +12,7 @@ exports.Exist = async function (req, res, next) {
             throw new Error('Error de peticion (Se espera un valor entero))');
         }
 
-        cadena = `SELECT * FROM bandas WHERE id = ${req.params.id};`
+        cadena = `SELECT * FROM ${tableName} WHERE id = ${req.params.id};`
         const respuesta = await sequelize.query(cadena, { type: sequelize.QueryTypes.SELECT });
         console.log(respuesta);
         if (respuesta.length > 0) {
@@ -20,7 +21,6 @@ exports.Exist = async function (req, res, next) {
         } else {
             res.status(404).json({ status: 'No encontrado' });
         }
-
     }
     catch (err) {
         console.log(err);
@@ -46,7 +46,7 @@ exports.Search = async function (req, res, next) {
         buscar = buscar.substr(0, buscar.length - 5);
         buscar = buscar.length > 0 ? ` WHERE ${buscar}` : '';
         console.log('Actualizado: ', buscar);
-        cadena = `SELECT * FROM bandas ${buscar}`;
+        cadena = `SELECT * FROM ${tableName} ${buscar}`;
         const respuesta = await sequelize.query(cadena, { type: sequelize.QueryTypes.SELECT });
         //console.log(respuesta);
         if (respuesta.length > 0) {
@@ -65,7 +65,7 @@ exports.Search = async function (req, res, next) {
 
 exports.List = async function (req, res, next) {
     try {
-        const todos = await sequelize.query('SELECT * FROM bandas', { type: sequelize.QueryTypes.SELECT });
+        const todos = await sequelize.query(`SELECT * FROM ${tableName}`, { type: sequelize.QueryTypes.SELECT });
         console.log(todos);
         res.json(todos);
     }
@@ -76,14 +76,14 @@ exports.List = async function (req, res, next) {
 };
 
 exports.Count = async function (req, res, next) {
-    const todos = await sequelize.query('SELECT count(*) cant FROM bandas', { type: sequelize.QueryTypes.SELECT });
+    const todos = await sequelize.query(`SELECT count(*) cant FROM ${tableName}`, { type: sequelize.QueryTypes.SELECT });
     console.log(todos);
     res.json(todos);
 };
 
 exports.Add = async function (req, res, next) {
     try {
-        cadena = `INSERT INTO bandas(nombre, integrantes, fecha_inicio, fecha_separación, pais)
+        cadena = `INSERT INTO ${tableName}(nombre, integrantes, fecha_inicio, fecha_separación, pais)
               VALUES('${req.body.nombre}',${req.body.integrantes}, '${req.body.fecha_inicio}',NULL,'${req.body.pais}')`;
         console.log(req.body, cadena);
         const resultado = await sequelize.query(cadena, { type: sequelize.QueryTypes.INSERT });
@@ -98,7 +98,7 @@ exports.Add = async function (req, res, next) {
 
 exports.Update = async function (req, res, next) {
     try {
-        cadena = `UPDATE bandas SET nombre='${req.body.nombre}',
+        cadena = `UPDATE ${tableName} SET nombre='${req.body.nombre}',
                       integrantes=${req.body.integrantes}, 
                       fecha_inicio='${req.body.fecha_inicio}',
                       fecha_separación='${req.body.fecha_separación}',
@@ -115,7 +115,7 @@ exports.Update = async function (req, res, next) {
 }
 exports.Delete = async function (req, res, next) {
     try {
-        cadena = `DELETE FROM bandas WHERE id=${req.params.id}`;
+        cadena = `DELETE FROM ${tableName} WHERE id=${req.params.id}`;
         console.log(cadena);
         const resultado = await sequelize.query(cadena, { type: sequelize.QueryTypes.DELETE });
         console.log(req.banda)
