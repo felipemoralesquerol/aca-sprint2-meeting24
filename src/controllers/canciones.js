@@ -1,7 +1,6 @@
 // Conector a la base de datos
 const sequelize = require('../database/db');
-const tableName = 'albumes';
-const relation1 = 'canciones'
+const tableName = 'canciones';
 
 // Importación de modelos
 //const { cuentaBancariaModel, contactoModel } = require('../models/cuentaBancaria');
@@ -17,9 +16,7 @@ exports.Exist = async function (req, res, next) {
         const respuesta = await sequelize.query(cadena, { type: sequelize.QueryTypes.SELECT });
         console.log(respuesta);
         if (respuesta.length > 0) {
-            cadenaRelation1 = `SELECT * FROM ${relation1} WHERE album_id = ${req.params.id}`;
-            const respuestaRelation1 = await sequelize.query(cadenaRelation1, { type: sequelize.QueryTypes.SELECT });
-            req.banda = { album: respuesta, canciones: [respuestaRelation1] };
+            req.banda = respuesta;
             next();
         } else {
             res.status(404).json({ status: 'No encontrado' });
@@ -36,11 +33,17 @@ exports.Exist = async function (req, res, next) {
 exports.Search = async function (req, res, next) {
     try {
         buscar = ""
-        if (req.query.banda_id) {
-            buscar += ` banda_id like '%${req.query.banda_id}%' AND `;
+        if (req.query.duracion) {
+            buscar += ` duracion like '%${req.query.duracion}%' AND `;
         };
         if (req.query.nombre) {
             buscar += `nombre like '%${req.query.nombre}%' AND `
+        };
+        if (req.query.banda_id) {
+            buscar += `banda_id = ${req.query.banda_id} AND `
+        };
+        if (req.query.album_id) {
+            buscar += `album_id = ${req.query.album_id} AND `
         };
         // Recorte AND final
         buscar = buscar.substr(0, buscar.length - 5);
@@ -83,8 +86,8 @@ exports.Count = async function (req, res, next) {
 
 exports.Add = async function (req, res, next) {
     try {
-        cadena = `INSERT INTO ${tableName}(nombre, banda_id, fecha_publicacion)
-                  VALUES('${req.body.nombre}','${req.body.banda_id}', '${req.body.fecha_publicacion}')`;
+        cadena = `INSERT INTO ${tableName}(nombre, duracion, banda_id, album_id, fecha_publicacion)
+                  VALUES('${req.body.nombre}','${req.body.duracion}','${req.body.banda_id}','${req.body.album_id}', '${req.body.fecha_publicacion}')`;
         console.log(req.body, cadena);
         const resultado = await sequelize.query(cadena, { type: sequelize.QueryTypes.INSERT });
         res.json(resultado);

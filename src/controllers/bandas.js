@@ -1,6 +1,7 @@
 // Conector a la base de datos
 const sequelize = require('../database/db');
 const tableName = 'bandas';
+const relation1 = 'albumes'
 
 // Importación de modelos
 //const { cuentaBancariaModel, contactoModel } = require('../models/cuentaBancaria');
@@ -16,7 +17,9 @@ exports.Exist = async function (req, res, next) {
         const respuesta = await sequelize.query(cadena, { type: sequelize.QueryTypes.SELECT });
         console.log(respuesta);
         if (respuesta.length > 0) {
-            req.banda = respuesta;
+            cadenaRelation1 = `SELECT * FROM ${relation1} WHERE banda_id = ${req.params.id}`;
+            const respuestaRelation1 = await sequelize.query(cadenaRelation1, { type: sequelize.QueryTypes.SELECT });
+            req.banda = { banda: respuesta, albumes: [respuestaRelation1] };
             next();
         } else {
             res.status(404).json({ status: 'No encontrado' });
