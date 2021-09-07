@@ -1,5 +1,5 @@
 // Importación de base de datos
-const mongoose = require('./database/mongo');
+// const mongoose = require('./database/mongo');
 const sequelize = require('./database/db');
 
 const morgan = require('morgan');
@@ -8,6 +8,9 @@ require('dotenv').config();
 
 // Info gestionada en MySQL
 const bandasRouter = require('./routes/bandas');
+const albumesRouter = require('./routes/albumes');
+//const cancionesRouter = require('./routes/canciones')
+
 
 // Importaciones adicionales
 const cors = require('cors');
@@ -23,6 +26,11 @@ app.options('*', cors());
 
 
 app.use('/bandas', bandasRouter);
+app.use('/albumes', albumesRouter);
+//app.use('/bandas', cancionesRouter);
+
+
+
 
 app.use('/version', (req, res) => {
     const admin = new mongoose.mongo.Admin(mongoose.connection.db);
