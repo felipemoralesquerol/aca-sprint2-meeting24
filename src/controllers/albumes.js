@@ -9,9 +9,9 @@ const relation1 = 'canciones'
 exports.Exist = async function (req, res, next) {
     try {
         // Evita SQL injection
-        if (isNaN(parseInt(req.params.id))) {
-            throw new Error('Error de peticion (Se espera un valor entero))');
-        }
+        // if (isNaN(parseInt(req.params.id))) {
+        //     throw new Error('Error de peticion (Se espera un valor entero))');
+        // }
 
         cadena = `SELECT * FROM ${tableName} WHERE id = ${req.params.id};`
         const respuesta = await sequelize.query(cadena, { type: sequelize.QueryTypes.SELECT });

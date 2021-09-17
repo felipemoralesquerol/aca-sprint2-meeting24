@@ -37,7 +37,7 @@ exports.Search = async function (req, res, next) {
     try {
         buscar = ""
         if (req.query.pais) {
-            buscar += ` pais like '%${req.query.pais}%' AND `;
+            buscar += ` pais_id like '%${req.query.pais}%' AND `;
         };
         if (req.query.nombre) {
             buscar += `nombre like '%${req.query.nombre}%' AND `
@@ -86,8 +86,8 @@ exports.Count = async function (req, res, next) {
 
 exports.Add = async function (req, res, next) {
     try {
-        cadena = `INSERT INTO ${tableName}(nombre, integrantes, fecha_inicio, fecha_separación, pais)
-              VALUES('${req.body.nombre}',${req.body.integrantes}, '${req.body.fecha_inicio}',NULL,'${req.body.pais}')`;
+        cadena = `INSERT INTO ${tableName}(nombre, integrantes, fecha_inicio, fecha_separación, pais_id)
+              VALUES('${req.body.nombre}',${req.body.integrantes}, '${req.body.fecha_inicio}',NULL,'${req.body.pais_id}')`;
         console.log(req.body, cadena);
         const resultado = await sequelize.query(cadena, { type: sequelize.QueryTypes.INSERT });
         res.json(resultado);

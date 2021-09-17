@@ -3,6 +3,7 @@
 const sequelize = require('./database/db');
 
 const morgan = require('morgan');
+const helmet = require('helmet');
 
 require('dotenv').config();
 
@@ -11,6 +12,11 @@ const bandasRouter = require('./routes/bandas');
 const albumesRouter = require('./routes/albumes');
 const cancionesRouter = require('./routes/canciones')
 
+var corsOptions = {
+    origin: 'http://localhost',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 
 // Importaciones adicionales
 const cors = require('cors');
@@ -18,11 +24,12 @@ const express = require('express');
 const app = express();
 
 // Settings
+//app.use(helmet());
 app.use(express.json());
 app.use(morgan('combined'));
 // Gestión de cors
 app.use(cors());
-app.options('*', cors());
+app.options(corsOptions, cors());
 
 app.use('/bandas', bandasRouter);
 app.use('/albumes', albumesRouter);
